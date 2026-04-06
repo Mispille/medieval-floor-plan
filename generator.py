@@ -55,7 +55,7 @@ class Room:
 
 @dataclass
 class Corridor:
-    """Corridor en forme de L entre deux pièces"""
+    """Couloir entre deux pièces"""
 
     x1: int
     y1: int
@@ -101,7 +101,7 @@ class _BSPNode:
 
 
 def _split(node: _BSPNode, depth: int, min_size: int, max_depth: int) -> None:
-    """Séparation récursive de chaque node jusqua max_depth ou taille mini atteinte"""
+    """Séparation récursive de chaque node jusqu'à max_depth ou taille mini atteinte"""
     if depth >= max_depth:
         return
 
@@ -167,7 +167,7 @@ def _nearest_room(node: _BSPNode) -> Optional[Room]:
 
 
 def _connect(node: _BSPNode, corridors: list[Corridor]) -> None:
-    """Connecte les sous-nodes avec un Corridor (en L)"""
+    """Connecte les sous-nodes avec un "Corridor" (couloir)"""
     if node.is_leaf:
         return
     if node.left:
@@ -190,7 +190,7 @@ def _connect(node: _BSPNode, corridors: list[Corridor]) -> None:
 
 
 def generate(config: Optional[GeneratorConfig] = None) -> FloorPlan:
-    """Retourne un "FloorPlan" d'une maison médiévale."""
+    """Retourne un "FloorPlan" d'une maison médiévale aléatoire"""
     if config is None:
         config = GeneratorConfig()
 
@@ -219,14 +219,14 @@ def generate(config: Optional[GeneratorConfig] = None) -> FloorPlan:
 _WALL = "#"  # Murs
 _FLOOR = " "  # Sol (reste vide)
 _EMPTY = "·"  # En dehors de toute pièce
-_PATH = "░"  # Corridor
+_PATH = "░"  # Corridor (couloir)
 
 
 def render_ascii(plan: FloorPlan, show_labels: bool = True) -> str:
     W, H = plan.width, plan.height
     grid = [[_EMPTY] * W for _ in range(H)]
 
-    # 1. Dessine les corridors
+    # 1. Dessine les corridors/couloirs
     for c in plan.corridors:
         # Segment horizontal à y1, puis segment vertical à x2
         x_range = range(min(c.x1, c.x2), max(c.x1, c.x2) + 1)
