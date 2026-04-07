@@ -61,6 +61,8 @@ class Corridor:
     y1: int
     x2: int  # Fin du couloir
     y2: int
+    room_id_a: int = 0
+    room_id_b: int = 0
 
 
 @dataclass
@@ -181,7 +183,7 @@ def _connect(node: _BSPNode, corridors: list[Corridor]) -> None:
     if left_room and right_room:
         lc = left_room.rect.center()
         rc = right_room.rect.center()
-        corridors.append(Corridor(lc[0], lc[1], rc[0], rc[1]))
+        corridors.append(Corridor(lc[0], lc[1], rc[0], rc[1], left_room.id, right_room.id))
 
 
 # ---------------------------------------------------------------------------
