@@ -34,9 +34,9 @@ ROOM_TYPES = [
 
 @dataclass
 class Rect:
-    x: int
+    x: int  # Position du rectangle
     y: int
-    w: int
+    w: int  # Largeur et hauteur du rectangle
     h: int
 
     def center(self) -> tuple[int, int]:
@@ -49,7 +49,7 @@ class Rect:
 @dataclass
 class Room:
     rect: Rect
-    room_type: str
+    room_type: str  # Nom de la pièce
     id: int
 
 
@@ -57,9 +57,9 @@ class Room:
 class Corridor:
     """Couloir entre deux pièces"""
 
-    x1: int
+    x1: int # Début du couloir
     y1: int
-    x2: int
+    x2: int # Fin du couloir
     y2: int
 
 
@@ -74,7 +74,7 @@ class FloorPlan:
 @dataclass
 class GeneratorConfig:
     width: int = 72  # Largeur grille ASCII - 72 en v1
-    height: int = 24  # Hauteur grille ASCII - 48 en v1
+    height: int = 48  # Hauteur grille ASCII - 48 en v1
     min_room_size: int = 8  # Taille minimale d'une pièce
     max_depth: int = 5  # Profondeur récursion du BSP recursion → Gère nb pièces
     room_margin: int = 1  # Gap entre murs et rectangles
