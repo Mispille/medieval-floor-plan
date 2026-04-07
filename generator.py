@@ -57,9 +57,9 @@ class Room:
 class Corridor:
     """Couloir entre deux pièces"""
 
-    x1: int # Début du couloir
+    x1: int  # Début du couloir
     y1: int
-    x2: int # Fin du couloir
+    x2: int  # Fin du couloir
     y2: int
 
 
