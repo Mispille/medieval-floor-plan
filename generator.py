@@ -183,7 +183,9 @@ def _connect(node: _BSPNode, corridors: list[Corridor]) -> None:
     if left_room and right_room:
         lc = left_room.rect.center()
         rc = right_room.rect.center()
-        corridors.append(Corridor(lc[0], lc[1], rc[0], rc[1], left_room.id, right_room.id))
+        corridors.append(
+            Corridor(lc[0], lc[1], rc[0], rc[1], left_room.id, right_room.id)
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -268,4 +270,3 @@ def render_ascii(plan: FloorPlan, show_labels: bool = True) -> str:
                     grid[ly][gx] = ch
 
     return "\n".join("".join(row) for row in grid)
-
