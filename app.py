@@ -11,9 +11,9 @@ app = Flask(__name__)
 
 current_svg: str = ""
 
+
 @app.route("/")
 def index():
-    
     global current_svg
 
     # Import de la configuration
@@ -24,11 +24,11 @@ def index():
     rend_config = app_config["renderer"]
 
     config = GeneratorConfig(
-            width=gen_config["width"],
-            height=gen_config["height"],
-            min_room_size=gen_config["min_room_size"],
-            max_depth=gen_config["max_depth"],
-            room_margin=gen_config["room_margin"],
+        width=gen_config["width"],
+        height=gen_config["height"],
+        min_room_size=gen_config["min_room_size"],
+        max_depth=gen_config["max_depth"],
+        room_margin=gen_config["room_margin"],
     )
 
     plan = generate(config)
@@ -38,14 +38,19 @@ def index():
 
     return render_template("index.html", svg=svg)
 
+
 @app.route("/export")
 def export_png():
     buffer = io.BytesIO()
     cairosvg.svg2png(bytestring=current_svg.encode("utf-8"), write_to=buffer)
     buffer.seek(0)
-    return send_file(path_or_file=buffer, as_attachment=True, mimetype="image/png" ,download_name="maison.png")
+    return send_file(
+        path_or_file=buffer,
+        as_attachment=True,
+        mimetype="image/png",
+        download_name="maison.png",
+    )
+
 
 if __name__ == "__main__":
-
     app.run(debug=True)
-
