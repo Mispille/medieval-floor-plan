@@ -1,2 +1,4 @@
 __pycache__
-.venv*svg
+.venv
+.ruff_cache
+*svg
