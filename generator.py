@@ -1,5 +1,5 @@
 """
-Générateur de plan de maison médiévale en Binary Space Partitioning (BSP)
+Generateur de plan de maison medievale en Binary Space Partitioning (BSP)
 
 API publique :
     generate(config) -> FloorPlan
@@ -49,18 +49,20 @@ class Rect:
 @dataclass
 class Room:
     rect: Rect
-    room_type: str  # Nom de la pièce
+    room_type: str  # Nom de la piece
     id: int
 
 
 @dataclass
 class Corridor:
-    """Couloir entre deux pièces"""
+    """Couloir entre deux pieces"""
 
-    x1: int  # Début du couloir
+    x1: int  # Debut du couloir
     y1: int
     x2: int  # Fin du couloir
     y2: int
+    room_id_a: int = 0
+    room_id_b: int = 0
 
 
 @dataclass
@@ -75,14 +77,14 @@ class FloorPlan:
 class GeneratorConfig:
     width: int = 72  # Largeur grille ASCII - 72 en v1
     height: int = 48  # Hauteur grille ASCII - 48 en v1
-    min_room_size: int = 8  # Taille minimale d'une pièce
-    max_depth: int = 5  # Profondeur récursion du BSP recursion → Gère nb pièces
+    min_room_size: int = 8  # Taille minimale d'une piece
+    max_depth: int = 5  # Profondeur recursion du BSP recursion -> Gere nb pieces
     room_margin: int = 1  # Gap entre murs et rectangles
     seed: Optional[int] = None
 
 
 # ---------------------------------------------------------------------------
-# Algos internes au BSP (en cours d'apprentissage, va évoluer pour optimisation)
+# Algos internes au BSP (en cours d'apprentissage, va evoluer pour optimisation)
 # ---------------------------------------------------------------------------
 
 
@@ -101,7 +103,7 @@ class _BSPNode:
 
 
 def _split(node: _BSPNode, depth: int, min_size: int, max_depth: int) -> None:
-    """Séparation récursive de chaque node jusqu'à max_depth ou taille mini atteinte"""
+    """Separation recursive de chaque node jusqu'a max_depth ou taille mini atteinte"""
     if depth >= max_depth:
         return
 
@@ -133,7 +135,7 @@ def _split(node: _BSPNode, depth: int, min_size: int, max_depth: int) -> None:
 def _place_rooms(
     node: _BSPNode, margin: int, rooms: list[Room], counter: list[int]
 ) -> None:
-    """Assigne une pièce à chaque node feuille"""
+    """Assigne une piece a chaque node feuille"""
     if node.is_leaf:
         r = node.rect
         rx = r.x + margin
@@ -158,7 +160,7 @@ def _place_rooms(
 
 
 def _nearest_room(node: _BSPNode) -> Optional[Room]:
-    """Retourne toute pièce atteignable depuis un node"""
+    """Retourne toute piece atteignable depuis un node"""
     if node.is_leaf:
         return node.room
     left = _nearest_room(node.left) if node.left else None
@@ -181,7 +183,9 @@ def _connect(node: _BSPNode, corridors: list[Corridor]) -> None:
     if left_room and right_room:
         lc = left_room.rect.center()
         rc = right_room.rect.center()
-        corridors.append(Corridor(lc[0], lc[1], rc[0], rc[1]))
+        corridors.append(
+            Corridor(lc[0], lc[1], rc[0], rc[1], left_room.id, right_room.id)
+        )
 
 
 # ---------------------------------------------------------------------------
@@ -190,7 +194,7 @@ def _connect(node: _BSPNode, corridors: list[Corridor]) -> None:
 
 
 def generate(config: Optional[GeneratorConfig] = None) -> FloorPlan:
-    """Retourne un "FloorPlan" d'une maison médiévale aléatoire"""
+    """Retourne un "FloorPlan" d'une maison medievale aleatoire"""
     if config is None:
         config = GeneratorConfig()
 
@@ -213,12 +217,12 @@ def generate(config: Optional[GeneratorConfig] = None) -> FloorPlan:
 
 
 # ---------------------------------------------------------------------------
-# Rendu ASCII - Test visuel pour validation BSP: Terminal seulement - sera supprimé!
+# Rendu ASCII - Test visuel pour validation BSP: Terminal seulement - sera supprime!
 # ---------------------------------------------------------------------------
 
 _WALL = "#"  # Murs
 _FLOOR = " "  # Sol (reste vide)
-_EMPTY = "·"  # En dehors de toute pièce
+_EMPTY = "·"  # En dehors de toute piece
 _PATH = "░"  # Corridor (couloir)
 
 
@@ -228,7 +232,7 @@ def render_ascii(plan: FloorPlan, show_labels: bool = True) -> str:
 
     # 1. Dessine les corridors/couloirs
     for c in plan.corridors:
-        # Segment horizontal à y1, puis segment vertical à x2
+        # Segment horizontal a y1, puis segment vertical a x2
         x_range = range(min(c.x1, c.x2), max(c.x1, c.x2) + 1)
         y_range = range(min(c.y1, c.y2), max(c.y1, c.y2) + 1)
         for x in x_range:
@@ -238,7 +242,7 @@ def render_ascii(plan: FloorPlan, show_labels: bool = True) -> str:
             if 0 <= y < H and 0 <= c.x2 < W and grid[y][c.x2] == _EMPTY:
                 grid[y][c.x2] = _PATH
 
-    # 2. Déssine les pièces
+    # 2. Dessine les pieces
     for room in plan.rooms:
         r = room.rect
         for dy in range(r.h):
@@ -249,7 +253,7 @@ def render_ascii(plan: FloorPlan, show_labels: bool = True) -> str:
                 is_wall = dy == 0 or dy == r.h - 1 or dx == 0 or dx == r.w - 1
                 grid[gy][gx] = _WALL if is_wall else _FLOOR
 
-    # 3. Ecris le nom de chaque pièce
+    # 3. Ecris le nom de chaque piece
     if show_labels:
         for room in plan.rooms:
             r = room.rect
@@ -266,20 +270,3 @@ def render_ascii(plan: FloorPlan, show_labels: bool = True) -> str:
                     grid[ly][gx] = ch
 
     return "\n".join("".join(row) for row in grid)
-
-
-# ---------------------------------------------------------------------------
-# Point d'entrée CLI
-# ---------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    import sys
-
-    depth = int(sys.argv[1]) if len(sys.argv) > 1 else 5
-    config = GeneratorConfig(max_depth=depth)
-    plan = generate(config)
-
-    print(render_ascii(plan))
-    print()
-    print(f"Pièces : {len(plan.rooms)}  |  Couloirs : {len(plan.corridors)}")
-    print("Types  :", ", ".join(r.room_type for r in plan.rooms))

@@ -1,0 +1,15 @@
+[generator]
+width = 72          # Largeur grille ASCII - 72 en v1
+height = 48         # Hauteur grille ASCII - 48 en v1
+min_room_size = 8   # Taille minimale d'une piece
+max_depth = 3       # Profondeur recursion du BSP recursion -> Gere nb pieces
+room_margin = 1     # Gap entre murs et rectangles
+
+[renderer]
+SCALE = 12                  # px par cellule de grille
+BG_COLOR = "#f5f0e8"        # fond parchemin
+WALL_COLOR = "#1a1a1a"      # murs
+CORRIDOR_COLOR = "#c4a882"  # couloirs (beige-brun)
+WALL_W = 2                  # px epaisseur mur
+CORRIDOR_W = 8              # px largeur couloir
+
