@@ -70,7 +70,9 @@ def _svg_room(room: Room, scale: int, bg, wall_col, wall_w) -> str:
 # ---------------------------------------------------------------------------
 
 
-def render_svg(plan: FloorPlan, title: Optional[str] = None, cfg: Optional[dict] = None) -> str:
+def render_svg(
+    plan: FloorPlan, title: Optional[str] = None, cfg: Optional[dict] = None
+) -> str:
     """Retourne une chaine SVG complete representant le plan"""
 
     # Chargement configuration
@@ -89,7 +91,7 @@ def render_svg(plan: FloorPlan, title: Optional[str] = None, cfg: Optional[dict]
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" '
         f'width="{W}" height="{total_h}" viewBox="0 0 {W} {total_h}">',
-        _svg_background(W, total_h, bg = BG_COLOR),
+        _svg_background(W, total_h, bg=BG_COLOR),
     ]
 
     if title:
@@ -104,10 +106,18 @@ def render_svg(plan: FloorPlan, title: Optional[str] = None, cfg: Optional[dict]
     # Couloirs d'abord — les pieces seront dessinees par-dessus
     # ce qui cache automatiquement la partie des couloirs a l'interieur des pieces
     for corridor in plan.corridors:
-        parts.append(_svg_corridor(corridor, scale=SCALE, corr_col=CORRIDOR_COLOR, corr_w=CORRIDOR_W))
+        parts.append(
+            _svg_corridor(
+                corridor, scale=SCALE, corr_col=CORRIDOR_COLOR, corr_w=CORRIDOR_W
+            )
+        )
 
     for room in plan.rooms:
-        parts.append(_svg_room(room, scale=SCALE, bg=BG_COLOR, wall_col=WALL_COLOR, wall_w=WALL_W))
+        parts.append(
+            _svg_room(
+                room, scale=SCALE, bg=BG_COLOR, wall_col=WALL_COLOR, wall_w=WALL_W
+            )
+        )
 
     parts.append("</g>")
     parts.append("</svg>")

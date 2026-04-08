@@ -9,7 +9,7 @@ if __name__ == "__main__":
     # Chargement de la configuration
     with open("config.toml", "rb") as f:
         app_config = tomllib.load(f)
-    
+
     gen_config = app_config["generator"]
     rend_config = app_config["renderer"]
 
@@ -22,11 +22,12 @@ if __name__ == "__main__":
             depth = gen_config["max_depth"]
 
         config = GeneratorConfig(
-                width=gen_config["width"],
-                height=gen_config["height"],
-                min_room_size=gen_config["min_room_size"],
-                max_depth=depth,
-                room_margin=gen_config["room_margin"])
+            width=gen_config["width"],
+            height=gen_config["height"],
+            min_room_size=gen_config["min_room_size"],
+            max_depth=depth,
+            room_margin=gen_config["room_margin"],
+        )
 
         plan = generate(config)
 
