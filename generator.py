@@ -269,19 +269,3 @@ def render_ascii(plan: FloorPlan, show_labels: bool = True) -> str:
 
     return "\n".join("".join(row) for row in grid)
 
-
-# ---------------------------------------------------------------------------
-# Point d'entree CLI
-# ---------------------------------------------------------------------------
-
-if __name__ == "__main__":
-    import sys
-
-    depth = int(sys.argv[1]) if len(sys.argv) > 1 else 5
-    config = GeneratorConfig(max_depth=depth)
-    plan = generate(config)
-
-    print(render_ascii(plan))
-    print()
-    print(f"Pieces : {len(plan.rooms)}  |  Couloirs : {len(plan.corridors)}")
-    print("Types  :", ", ".join(r.room_type for r in plan.rooms))
