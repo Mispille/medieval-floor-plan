@@ -70,6 +70,7 @@ class FloorPlan:
     corridors: list[Corridor]
     width: int
     height: int
+    seed: int
 
 
 @dataclass
@@ -211,5 +212,9 @@ def generate(config: Optional[GeneratorConfig] = None) -> FloorPlan:
     _connect(root, corridors)
 
     return FloorPlan(
-        rooms=rooms, corridors=corridors, width=config.width, height=config.height
+        rooms=rooms,
+        corridors=corridors,
+        width=config.width,
+        height=config.height,
+        seed=rng_seed,
     )
