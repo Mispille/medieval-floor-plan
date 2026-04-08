@@ -7,21 +7,9 @@ API publique :
     save_png(svg_str, path)
 """
 
-import cairosvg  # pyright: ignore[reportMissingTypeStubs]
 from typing import Optional
-from generator import FloorPlan, Room, Corridor
 
-# ---------------------------------------------------------------------------
-# Constantes avant creation fichier config.toml
-# ---------------------------------------------------------------------------
-
-# SCALE = 12  # px par cellule de grille
-# BG_COLOR = "#f5f0e8"  # fond parchemin
-# WALL_COLOR = "#1a1a1a"  # murs
-# CORRIDOR_COLOR = "#c4a882"  # couloirs (beige-brun)
-# WALL_W = 2  # px epaisseur mur
-# CORRIDOR_W = 8  # px largeur couloir
-
+from generator import Corridor, FloorPlan, Room
 
 # ---------------------------------------------------------------------------
 # Elements SVG internes
@@ -122,14 +110,3 @@ def render_svg(
     parts.append("</g>")
     parts.append("</svg>")
     return "\n".join(parts)
-
-
-def save_svg(svg_str: str, path: str) -> None:
-    """Sauvegarde le SVG dans un fichier"""
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(svg_str)
-
-
-def save_png(svg_str: str, path: str) -> None:
-    """Exporte le SVG en PNG via cairosvg"""
-    cairosvg.svg2png(bytestring=svg_str.encode("utf-8"), write_to=path)  # pyright: ignore[reportUnknownMemberType]

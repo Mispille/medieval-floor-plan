@@ -1,10 +1,10 @@
-import cairosvg
-from flask import Flask, render_template, send_file
-
-import tomllib
 import io
 
-from generator import generate, GeneratorConfig
+import cairosvg
+import tomllib
+from flask import Flask, render_template, send_file
+
+from generator import GeneratorConfig, generate
 from renderer import render_svg
 
 app = Flask(__name__)
@@ -50,7 +50,3 @@ def export_png():
         mimetype="image/png",
         download_name="maison.png",
     )
-
-
-if __name__ == "__main__":
-    app.run(debug=False)

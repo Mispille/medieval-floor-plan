@@ -11,7 +11,6 @@ import random
 from dataclasses import dataclass
 from typing import Optional
 
-
 # ---------------------------------------------------------------------------
 # Data structures
 # ---------------------------------------------------------------------------
@@ -214,59 +213,3 @@ def generate(config: Optional[GeneratorConfig] = None) -> FloorPlan:
     return FloorPlan(
         rooms=rooms, corridors=corridors, width=config.width, height=config.height
     )
-
-
-# ---------------------------------------------------------------------------
-# Rendu ASCII - Test visuel pour validation BSP: Terminal seulement - sera supprime!
-# ---------------------------------------------------------------------------
-
-_WALL = "#"  # Murs
-_FLOOR = " "  # Sol (reste vide)
-_EMPTY = "·"  # En dehors de toute piece
-_PATH = "░"  # Corridor (couloir)
-
-
-def render_ascii(plan: FloorPlan, show_labels: bool = True) -> str:
-    W, H = plan.width, plan.height
-    grid = [[_EMPTY] * W for _ in range(H)]
-
-    # 1. Dessine les corridors/couloirs
-    for c in plan.corridors:
-        # Segment horizontal a y1, puis segment vertical a x2
-        x_range = range(min(c.x1, c.x2), max(c.x1, c.x2) + 1)
-        y_range = range(min(c.y1, c.y2), max(c.y1, c.y2) + 1)
-        for x in x_range:
-            if 0 <= c.y1 < H and 0 <= x < W and grid[c.y1][x] == _EMPTY:
-                grid[c.y1][x] = _PATH
-        for y in y_range:
-            if 0 <= y < H and 0 <= c.x2 < W and grid[y][c.x2] == _EMPTY:
-                grid[y][c.x2] = _PATH
-
-    # 2. Dessine les pieces
-    for room in plan.rooms:
-        r = room.rect
-        for dy in range(r.h):
-            for dx in range(r.w):
-                gy, gx = r.y + dy, r.x + dx
-                if not (0 <= gy < H and 0 <= gx < W):
-                    continue
-                is_wall = dy == 0 or dy == r.h - 1 or dx == 0 or dx == r.w - 1
-                grid[gy][gx] = _WALL if is_wall else _FLOOR
-
-    # 3. Ecris le nom de chaque piece
-    if show_labels:
-        for room in plan.rooms:
-            r = room.rect
-            inner_w = r.w - 2
-            inner_h = r.h - 2
-            if inner_w < 1 or inner_h < 1:
-                continue
-            label = room.room_type[:inner_w]
-            lx = r.x + 1 + (inner_w - len(label)) // 2
-            ly = r.y + 1 + inner_h // 2
-            for i, ch in enumerate(label):
-                gx = lx + i
-                if 0 <= ly < H and 0 <= gx < W:
-                    grid[ly][gx] = ch
-
-    return "\n".join("".join(row) for row in grid)
