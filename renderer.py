@@ -3,8 +3,6 @@ Rendu SVG du FloorPlan medieval généré avec generator.py
 
 API publique :
     render_svg(plan, title=None, cfg=None) -> str
-    save_svg(svg_str, path)
-    save_png(svg_str, path)
 """
 
 from typing import Optional
