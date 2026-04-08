@@ -13,12 +13,12 @@ if __name__ == "__main__":
     gen_config = app_config["generator"]
     rend_config = app_config["renderer"]
 
-    # Generation du plan avec 1 argument pour la profondeur (3 par defaut)
+    # Generation du plan avec 1 argument pour la profondeur
     if len(sys.argv) > 1:
         try:
             depth = int(sys.argv[1])
         except ValueError:
-            print("Profondeur invalide, 3 par defaut")
+            print("Profondeur invalide, retour a la valeur par defaut")
             depth = gen_config["max_depth"]
 
         config = GeneratorConfig(
@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
         plan = generate(config)
 
-        # Creation du SVG et options de sauvegarde en SVG ou PNG
+        # Creation du SVG et options de sauvegarde en SVG
         chemin: str = "plan.svg"
         svg = render_svg(plan=plan, title="Maison medievale", cfg=rend_config)
         save_svg(svg_str=svg, path=chemin)

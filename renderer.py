@@ -12,7 +12,7 @@ from typing import Optional
 from generator import FloorPlan, Room, Corridor
 
 # ---------------------------------------------------------------------------
-# Constantes
+# Constantes avant creation fichier config.toml
 # ---------------------------------------------------------------------------
 
 # SCALE = 12  # px par cellule de grille
