@@ -41,9 +41,6 @@ class Rect:
     def center(self) -> tuple[int, int]:
         return (self.x + self.w // 2, self.y + self.h // 2)
 
-    def area(self) -> int:
-        return self.w * self.h
-
 
 @dataclass
 class Room:
@@ -75,8 +72,8 @@ class FloorPlan:
 
 @dataclass
 class GeneratorConfig:
-    width: int = 72  # Largeur grille ASCII - 72 en v1
-    height: int = 48  # Hauteur grille ASCII - 48 en v1
+    width: int = 72  # Largeur grille
+    height: int = 48  # Hauteur grille
     min_room_size: int = 8  # Taille minimale d'une piece
     max_depth: int = 5  # Profondeur recursion du BSP recursion -> Gere nb pieces
     room_margin: int = 1  # Gap entre murs et rectangles
@@ -84,7 +81,7 @@ class GeneratorConfig:
 
 
 # ---------------------------------------------------------------------------
-# Algos internes au BSP (en cours d'apprentissage, va evoluer pour optimisation)
+# Algos internes au BSP
 # ---------------------------------------------------------------------------
 
 
