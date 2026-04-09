@@ -31,6 +31,8 @@
             <label>Seed</label>
             <input type="number" name="seed" value="{{ seed }}">
 
+            <button type="submit">Appliquer</button>
+
             <button type="submit" id="btn-reroll"
                 onclick="document.querySelector('[name=seed]').removeAttribute('name')">
                 Reroll
@@ -39,12 +41,30 @@
         <a href="/export"> Exporter en PNG </a>
       </aside>
       <main class="canvas">
-        boutons zoom
+          <div id="zoom-controls">
+            <button onclick="changeZoom(1.2)">＋</button>
+            <button onclick="changeZoom(0.8)">－</button>
+            <button onclick="resetZoom()">Réinitialiser</button>
+          </div>
         <div id="svg-wrap">
           {{ svg | safe }}
         </div>
       </main>
     </div>
-    <script></script>
+    <script>
+        let scale = 1;
+        const wrap = document.getElementById('svg-wrap');
+
+        function changeZoom(factor) {
+            scale *= factor;
+            wrap.style.transform = `scale(${scale})`;
+            wrap.style.transformOrigin = 'top left';
+        }
+
+        function resetZoom() {
+            scale = 1;
+            wrap.style.transform = 'scale(1)';
+        }
+    </script>
   </body>
 </html>
