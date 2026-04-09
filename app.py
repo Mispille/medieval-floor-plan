@@ -29,10 +29,12 @@ def index():
     config = GeneratorConfig(
         width=int(request.args.get("width", gen_config["width"])),
         height=int(request.args.get("height", gen_config["height"])),
-        min_room_size=int(request.args.get("min_room_size", gen_config["min_room_size"])),
+        min_room_size=int(
+            request.args.get("min_room_size", gen_config["min_room_size"])
+        ),
         max_depth=int(request.args.get("max_depth", gen_config["max_depth"])),
         room_margin=int(request.args.get("room_margin", gen_config["room_margin"])),
-        seed=seed
+        seed=seed,
     )
 
     plan = generate(config)
@@ -41,15 +43,15 @@ def index():
     current_svg = svg
 
     return render_template(
-            "index.html",
-            svg=svg,
-            seed=plan.seed,
-            width=config.width,
-            height=config.height,
-            min_room_size=config.min_room_size,
-            max_depth=config.max_depth,
-            room_margin=config.room_margin,
-            )
+        "index.html",
+        svg=svg,
+        seed=plan.seed,
+        width=config.width,
+        height=config.height,
+        min_room_size=config.min_room_size,
+        max_depth=config.max_depth,
+        room_margin=config.room_margin,
+    )
 
 
 @app.route("/export")
