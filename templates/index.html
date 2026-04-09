@@ -1,5 +1,215 @@
-<body>
-    {{ svg | safe }}
-    <a href="/"> Reroll </a>
-    <a href="/export"> Exporter en PNG </a>
-</body>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Générateur médiéval</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Georgia, serif;
+        background-color: #2b1d0e;
+        color: #f5f0e8;
+        height: 100vh;
+        display: flex;
+      }
+
+      .layout {
+        display: flex;
+        width: 100%;
+        height: 100%;
+      }
+
+      .panel {
+        width: 280px;
+        flex-shrink: 0;
+        background-color: #1a0f07;
+        padding: 24px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        overflow-y: auto;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      input[type="range"] {
+        width: 100%;
+      }
+
+      .canvas {
+        flex: 1;
+        overflow: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      button,
+      a[href="/export"] {
+        padding: 8px 12px;
+        background-color: #5c3d1e;
+        color: #f5f0e8;
+        border: 1px solid #8c6a3f;
+        font-family: Georgia, serif;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      button:hover,
+      a[href="/export"]:hover {
+        background-color: #7a5230;
+      }
+
+      .panel > span {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        border-bottom: 1px solid #5c3d1e;
+        padding-bottom: 8px;
+      }
+
+      label {
+        font-size: 13px;
+        color: #c4a882;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        padding: 6px 8px;
+        background-color: #1a0f07;
+        color: #f5f0e8;
+        border: 1px solid #5c3d1e;
+        font-family: Georgia, serif;
+        font-size: 13px;
+      }
+
+      #zoom-controls {
+        display: flex;
+        gap: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout">
+      <aside class="panel">
+        <span>Générateur de maison médiévale aléatoire pour DND</span>
+        <form method="get" action="/">
+          <label>Largeur ({{ width }})</label>
+          <input
+            type="range"
+            name="width"
+            min="24"
+            max="120"
+            value="{{ width }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Largeur (' + this.value + ')'
+            "
+          />
+
+          <label>Hauteur ({{ height }})</label>
+          <input
+            type="range"
+            name="height"
+            min="24"
+            max="96"
+            value="{{ height }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Hauteur (' + this.value + ')'
+            "
+          />
+
+          <label>Taille min pièce ({{ min_room_size }})</label>
+          <input
+            type="range"
+            name="min_room_size"
+            min="4"
+            max="16"
+            value="{{ min_room_size }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Taille min pièce (' + this.value + ')'
+            "
+          />
+
+          <label>Profondeur ({{ max_depth }})</label>
+          <input
+            type="range"
+            name="max_depth"
+            min="1"
+            max="6"
+            value="{{ max_depth }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Profondeur (' + this.value + ')'
+            "
+          />
+
+          <label>Marge des murs ({{ room_margin }})</label>
+          <input
+            type="range"
+            name="room_margin"
+            min="0"
+            max="3"
+            value="{{ room_margin }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Marge des murs (' + this.value + ')'
+            "
+          />
+
+          <label>Seed</label>
+          <input type="number" name="seed" value="{{ seed }}" />
+
+          <button type="submit">Appliquer</button>
+
+          <button
+            type="submit"
+            id="btn-reroll"
+            onclick="
+              document.querySelector('[name=seed]').removeAttribute('name')
+            "
+          >
+            Reroll
+          </button>
+        </form>
+        <a href="/export"> Exporter en PNG </a>
+      </aside>
+      <main class="canvas">
+        <div id="zoom-controls">
+          <button onclick="changeZoom(1.2)">＋</button>
+          <button onclick="changeZoom(0.8)">－</button>
+          <button onclick="resetZoom()">Réinitialiser</button>
+        </div>
+        <div id="svg-wrap">{{ svg | safe }}</div>
+      </main>
+    </div>
+    <script>
+      let scale = 1;
+      const wrap = document.getElementById("svg-wrap");
+
+      function changeZoom(factor) {
+        scale *= factor;
+        wrap.style.transform = `scale(${scale})`;
+        wrap.style.transformOrigin = "top left";
+      }
+
+      function resetZoom() {
+        scale = 1;
+        wrap.style.transform = "scale(1)";
+      }
+    </script>
+  </body>
+</html>
