@@ -40,7 +40,16 @@ def index():
     svg: str = render_svg(plan=plan, title="Maison medievale", cfg=rend_config)
     current_svg = svg
 
-    return render_template("index.html", svg=svg, seed=plan.seed)
+    return render_template(
+            "index.html",
+            svg=svg,
+            seed=plan.seed,
+            width=config.width,
+            height=config.height,
+            min_room_size=config.min_room_size,
+            max_depth=config.max_depth,
+            room_margin=config.room_margin,
+            )
 
 
 @app.route("/export")
