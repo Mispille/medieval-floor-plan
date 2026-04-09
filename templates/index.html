@@ -1,70 +1,118 @@
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Générateur médiéval</title>
   </head>
   <body>
-      <div class="layout">
+    <div class="layout">
       <aside class="panel">
         Générateur de maison médiévale aléatoire pour DND
         <form>
-            <label>Largeur ({{ width }})</label>
-            <input type="range" name="width" min="24" max="120" value="{{ width }}"
-                oninput="this.previousElementSibling.textContent = 'Largeur (' + this.value + ')'">
-            
-            <label>Hauteur ({{ height }})</label>
-            <input type="range" name="height" min="24" max="96" value="{{ height }}"
-                oninput="this.previousElementSibling.textContent = 'Hauteur (' + this.value + ')'">
-            
-            <label>Taille min pièce ({{ min_room_size }})</label>
-            <input type="range" name="min_room_size" min="4" max="16" value="{{ min_room_size }}"
-                oninput="this.previousElementSibling.textContent = 'Taille min pièce (' + this.value + ')'">
-            
-            <label>Profondeur ({{ max_depth }})</label>
-            <input type="range" name="max_depth" min="1" max="6" value="{{ max_depth }}"
-                oninput="this.previousElementSibling.textContent = 'Profondeur (' + this.value + ')'">
-            
-            <label>Marge des murs ({{ room_margin }})</label>
-            <input type="range" name="room_margin" min="0" max="3" value="{{ room_margin }}"
-                oninput="this.previousElementSibling.textContent = 'Marge des murs (' + this.value + ')'">
-            
-            <label>Seed</label>
-            <input type="number" name="seed" value="{{ seed }}">
+          <label>Largeur ({{ width }})</label>
+          <input
+            type="range"
+            name="width"
+            min="24"
+            max="120"
+            value="{{ width }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Largeur (' + this.value + ')'
+            "
+          />
 
-            <button type="submit">Appliquer</button>
+          <label>Hauteur ({{ height }})</label>
+          <input
+            type="range"
+            name="height"
+            min="24"
+            max="96"
+            value="{{ height }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Hauteur (' + this.value + ')'
+            "
+          />
 
-            <button type="submit" id="btn-reroll"
-                onclick="document.querySelector('[name=seed]').removeAttribute('name')">
-                Reroll
-            </button>
+          <label>Taille min pièce ({{ min_room_size }})</label>
+          <input
+            type="range"
+            name="min_room_size"
+            min="4"
+            max="16"
+            value="{{ min_room_size }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Taille min pièce (' + this.value + ')'
+            "
+          />
+
+          <label>Profondeur ({{ max_depth }})</label>
+          <input
+            type="range"
+            name="max_depth"
+            min="1"
+            max="6"
+            value="{{ max_depth }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Profondeur (' + this.value + ')'
+            "
+          />
+
+          <label>Marge des murs ({{ room_margin }})</label>
+          <input
+            type="range"
+            name="room_margin"
+            min="0"
+            max="3"
+            value="{{ room_margin }}"
+            oninput="
+              this.previousElementSibling.textContent =
+                'Marge des murs (' + this.value + ')'
+            "
+          />
+
+          <label>Seed</label>
+          <input type="number" name="seed" value="{{ seed }}" />
+
+          <button type="submit">Appliquer</button>
+
+          <button
+            type="submit"
+            id="btn-reroll"
+            onclick="
+              document.querySelector('[name=seed]').removeAttribute('name')
+            "
+          >
+            Reroll
+          </button>
         </form>
         <a href="/export"> Exporter en PNG </a>
       </aside>
       <main class="canvas">
-          <div id="zoom-controls">
-            <button onclick="changeZoom(1.2)">＋</button>
-            <button onclick="changeZoom(0.8)">－</button>
-            <button onclick="resetZoom()">Réinitialiser</button>
-          </div>
-        <div id="svg-wrap">
-          {{ svg | safe }}
+        <div id="zoom-controls">
+          <button onclick="changeZoom(1.2)">＋</button>
+          <button onclick="changeZoom(0.8)">－</button>
+          <button onclick="resetZoom()">Réinitialiser</button>
         </div>
+        <div id="svg-wrap">{{ svg | safe }}</div>
       </main>
     </div>
     <script>
-        let scale = 1;
-        const wrap = document.getElementById('svg-wrap');
+      let scale = 1;
+      const wrap = document.getElementById("svg-wrap");
 
-        function changeZoom(factor) {
-            scale *= factor;
-            wrap.style.transform = `scale(${scale})`;
-            wrap.style.transformOrigin = 'top left';
-        }
+      function changeZoom(factor) {
+        scale *= factor;
+        wrap.style.transform = `scale(${scale})`;
+        wrap.style.transformOrigin = "top left";
+      }
 
-        function resetZoom() {
-            scale = 1;
-            wrap.style.transform = 'scale(1)';
-        }
+      function resetZoom() {
+        scale = 1;
+        wrap.style.transform = "scale(1)";
+      }
     </script>
   </body>
 </html>
