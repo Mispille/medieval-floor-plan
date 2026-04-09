@@ -22,12 +22,88 @@
         width: 100%;
         height: 100%;
       }
+
+      .panel {
+        width: 280px;
+        flex-shrink: 0;
+        background-color: #1a0f07;
+        padding: 24px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        overflow-y: auto;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      input[type="range"] {
+        width: 100%;
+      }
+
+      .canvas {
+        flex: 1;
+        overflow: auto;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      button,
+      a[href="/export"] {
+        padding: 8px 12px;
+        background-color: #5c3d1e;
+        color: #f5f0e8;
+        border: 1px solid #8c6a3f;
+        font-family: Georgia, serif;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+      }
+
+      button:hover,
+      a[href="/export"]:hover {
+        background-color: #7a5230;
+      }
+
+      .panel > span {
+        font-size: 15px;
+        font-weight: bold;
+        text-align: center;
+        border-bottom: 1px solid #5c3d1e;
+        padding-bottom: 8px;
+      }
+
+      label {
+        font-size: 13px;
+        color: #c4a882;
+      }
+
+      input[type="number"] {
+        width: 100%;
+        padding: 6px 8px;
+        background-color: #1a0f07;
+        color: #f5f0e8;
+        border: 1px solid #5c3d1e;
+        font-family: Georgia, serif;
+        font-size: 13px;
+      }
+
+      #zoom-controls {
+        display: flex;
+        gap: 8px;
+      }
     </style>
   </head>
   <body>
     <div class="layout">
       <aside class="panel">
-        Générateur de maison médiévale aléatoire pour DND
+        <span>Générateur de maison médiévale aléatoire pour DND</span>
         <form method="get" action="/">
           <label>Largeur ({{ width }})</label>
           <input
