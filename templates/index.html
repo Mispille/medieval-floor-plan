@@ -11,20 +11,30 @@
             <label>Largeur ({{ width }})</label>
             <input type="range" name="width" min="24" max="120" value="{{ width }}"
                 oninput="this.previousElementSibling.textContent = 'Largeur (' + this.value + ')'">
+            
             <label>Hauteur ({{ height }})</label>
             <input type="range" name="height" min="24" max="96" value="{{ height }}"
                 oninput="this.previousElementSibling.textContent = 'Hauteur (' + this.value + ')'">
+            
             <label>Taille min pièce ({{ min_room_size }})</label>
             <input type="range" name="min_room_size" min="4" max="16" value="{{ min_room_size }}"
                 oninput="this.previousElementSibling.textContent = 'Taille min pièce (' + this.value + ')'">
+            
             <label>Profondeur ({{ max_depth }})</label>
             <input type="range" name="max_depth" min="1" max="6" value="{{ max_depth }}"
                 oninput="this.previousElementSibling.textContent = 'Profondeur (' + this.value + ')'">
+            
             <label>Marge des murs ({{ room_margin }})</label>
             <input type="range" name="room_margin" min="0" max="3" value="{{ room_margin }}"
                 oninput="this.previousElementSibling.textContent = 'Marge des murs (' + this.value + ')'">
+            
             <label>Seed</label>
             <input type="number" name="seed" value="{{ seed }}">
+
+            <button type="submit" id="btn-reroll"
+                onclick="document.querySelector('[name=seed]').removeAttribute('name')">
+                Reroll
+            </button>
         </form>
         <a href="/"> Reroll </a>
         <a href="/export"> Exporter en PNG </a>
