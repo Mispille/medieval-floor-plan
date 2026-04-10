@@ -1,6 +1,7 @@
 # Générateur de plans de maisons médiévales aléatoires
 
 Génère aléatoirement des plans de maisons médiévales pour vos parties de jeu de rôle
+
 Accessible depuis un navigateur web, sans installation complexe
 
 ---
@@ -10,29 +11,31 @@ Accessible depuis un navigateur web, sans installation complexe
 1. Lancez l'application (voir Installation ci-dessous)
 2. Ouvrez [http://127.0.0.1:5000](http://127.0.0.1:5000)
 3. Ajustez les curseurs selon vos besoins :
-   - **Largeur / Hauteur** — dimensions du plan
-   - **Taille min pièce** — taille minimale de chaque pièce
-   - **Profondeur** — nombre de pièces générées
-   - **Marge des murs** — espace entre les pièces
-4. Cliquez sur **Appliquer** pour générer, **Reroll** pour un nouveau plan aléatoire
-5. Le champ **Seed** permet de retrouver un plan déjà généré en réutilisant le même numéro
+   - **Largeur / Hauteur** — dimensions
+   - **Taille min pièce** — taille min de chaque pièce
+   - **Profondeur** — nombre pièces générées
+   - **Marge des murs** — espace entre pièces
+4. Cliquez sur **Appliquer** pour générer avec le même seed, **Reroll** pour un nouveau plan aléatoire
+5. Le champ **Seed** permet de retrouver un plan déjà généré en réutilisant la même valeur
 6. Cliquez sur **Exporter en PNG** pour télécharger le plan
 
 ---
 
 ## Installation
 
-**Prérequis :** Python 3.11 ou supérieur
+**Prérequis :**
+* Python 3.11 ou supérieur
+* Git *(sauf si vous téléchargez manuellement le code source)*
 
 ```bash
-# Cloner le projet
+# Clonez le projet
 git clone https://github.com/Mispille/medieval-floor-plan.git
 cd medieval-floor-plan
 
-# Créer et activer l'environnement virtuel
+# Créez et activez l'environnement virtuel
 python -m venv .venv
 source .venv/bin/activate        # Linux / macOS
-.venv\Scripts\activate           # Windows
+.venv\Scripts\activate           # Windows (ajoutez .ps1 si Powershell)
 
 # Installer les dépendances
 pip install -r requirements.txt
@@ -43,7 +46,7 @@ python main.py
 
 ---
 
-## Structure du projet
+## Structure
 
 | Fichier        | Rôle                               |
 | -------------- | ---------------------------------- |
