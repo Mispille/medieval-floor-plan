@@ -45,10 +45,10 @@ python main.py
 
 ## Structure du projet
 
-| Fichier | Rôle |
-|---|---|
-| `main.py` | Point d'entrée — lance le serveur |
-| `app.py` | Serveur web — gère les requêtes |
+| Fichier        | Rôle                               |
+| -------------- | ---------------------------------- |
+| `main.py`      | Point d'entrée — lance le serveur  |
+| `app.py`       | Serveur web — gère les requêtes    |
 | `generator.py` | Algorithme BSP — génère les pièces |
-| `renderer.py` | Produit le SVG à partir du plan |
-| `config.toml` | Valeurs par défaut des paramètres |
+| `renderer.py`  | Produit le SVG à partir du plan    |
+| `config.toml`  | Valeurs par défaut des paramètres  |
