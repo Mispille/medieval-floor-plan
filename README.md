@@ -1,14 +1,14 @@
-# Générateur de plans médiévaux
+# Générateur de plans de maisons médiévales aléatoires
 
-Génère aléatoirement des plans de maisons médiévales pour vos parties de jeu de rôle.
-Accessible depuis un navigateur web, sans installation complexe.
+Génère aléatoirement des plans de maisons médiévales pour vos parties de jeu de rôle
+Accessible depuis un navigateur web, sans installation complexe
 
 ---
 
 ## Utilisation
 
 1. Lancez l'application (voir Installation ci-dessous)
-2. Ouvrez [http://127.0.0.1:5000](http://127.0.0.1:5000) dans votre navigateur
+2. Ouvrez [http://127.0.0.1:5000](http://127.0.0.1:5000)
 3. Ajustez les curseurs selon vos besoins :
    - **Largeur / Hauteur** — dimensions du plan
    - **Taille min pièce** — taille minimale de chaque pièce
@@ -22,7 +22,7 @@ Accessible depuis un navigateur web, sans installation complexe.
 
 ## Installation
 
-**Prérequis :** Python 3.11 ou supérieur — [python.org](https://www.python.org/downloads/)
+**Prérequis :** Python 3.11 ou supérieur
 
 ```bash
 # Cloner le projet
