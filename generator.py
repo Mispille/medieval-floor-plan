@@ -130,7 +130,7 @@ def _split(node: _BSPNode, depth: int, min_size: int, max_depth: int) -> None:
 
 
 def _place_rooms(
-    node: _BSPNode, margin: int, rooms: list[Room], counter: list[int]
+    node: _BSPNode, margin: int, rooms: list[Room], counter: list[int], available_types
 ) -> None:
     """Assigne une piece a chaque node feuille"""
     if node.is_leaf:
@@ -140,9 +140,11 @@ def _place_rooms(
         rw = r.w - margin * 2
         rh = r.h - margin * 2
         if rw >= 3 and rh >= 3:
+            if not available_types:
+                available_types.extend(random.sample(ROOM_TYPES, len(ROOM_TYPES)))
             room = Room(
                 rect=Rect(rx, ry, rw, rh),
-                room_type=random.choice(ROOM_TYPES),
+                room_type=available_types.pop(),
                 id=counter[0],
             )
             counter[0] += 1
@@ -151,9 +153,9 @@ def _place_rooms(
         return
 
     if node.left:
-        _place_rooms(node.left, margin, rooms, counter)
+        _place_rooms(node.left, margin, rooms, counter, available_types)
     if node.right:
-        _place_rooms(node.right, margin, rooms, counter)
+        _place_rooms(node.right, margin, rooms, counter, available_types)
 
 
 def _nearest_room(node: _BSPNode) -> Optional[Room]:
@@ -202,8 +204,9 @@ def generate(config: Optional[GeneratorConfig] = None) -> FloorPlan:
     _split(root, 0, config.min_room_size, config.max_depth)
 
     rooms: list[Room] = []
+    available_types = random.sample(ROOM_TYPES, len(ROOM_TYPES))
     counter = [0]
-    _place_rooms(root, config.room_margin, rooms, counter)
+    _place_rooms(root, config.room_margin, rooms, counter, available_types)
 
     corridors: list[Corridor] = []
     _connect(root, corridors)
