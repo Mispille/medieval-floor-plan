@@ -53,8 +53,7 @@
         gap: 12px;
       }
 
-      button,
-      a[href="/export"] {
+      button {
         padding: 8px 12px;
         background-color: #5c3d1e;
         color: #f5f0e8;
@@ -66,8 +65,7 @@
         text-decoration: none;
       }
 
-      button:hover,
-      a[href="/export"]:hover {
+      button:hover {
         background-color: #7a5230;
       }
 
@@ -185,7 +183,7 @@
             Reroll
           </button>
         </form>
-        <a href="/export"> Exporter en PNG </a>
+        <button type="button" onclick="exportPNG()">Exporter en PNG</button>
       </aside>
       <main class="canvas">
         <div id="zoom-controls">
@@ -209,6 +207,23 @@
       function resetZoom() {
         scale = 1;
         wrap.style.transform = "scale(1)";
+      }
+
+      function exportPNG() {
+        const svgEl = document.querySelector('#svg-wrap svg');
+        const svgStr = new XMLSerializer().serializeToString(svgEl);
+        const canvas = document.createElement('canvas');
+        canvas.width = svgEl.width.baseVal.value;
+        canvas.height = svgEl.height.baseVal.value;
+        const img = new Image();
+        img.onload = function () {
+            canvas.getContext('2d').drawImage(img, 0, 0);
+            const a = document.createElement('a');
+            a.download = 'maison.png';
+            a.href = canvas.toDataURL('image/png');
+            a.click();
+        };
+        img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgStr);
       }
     </script>
   </body>

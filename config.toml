@@ -1,6 +1,6 @@
 [generator]
-width = 72          # Largeur grille ASCII - 72 en v1
-height = 48         # Hauteur grille ASCII - 48 en v1
+width = 72
+height = 48
 min_room_size = 8   # Taille minimale d'une piece
 max_depth = 3       # Profondeur recursion du BSP recursion -> Gere nb pieces
 room_margin = 1     # Gap entre murs et rectangles
